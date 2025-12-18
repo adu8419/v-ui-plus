@@ -1,0 +1,118 @@
+//  fork from element-plus  and rewrite
+@use "sass:color";
+@use "./config" as *;
+@use "./function" as *;
+
+// BEM
+@mixin b($block) {
+  $B: $t-namespace + $t-common-separator + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+@mixin elb($block) {
+  $B: $el-namespace + $t-common-separator + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin e($element, $nest: false) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: #{$currentSelector + "." + $B + $t-element-separator + $unit + ","};
+  }
+
+  @if hitAllSpecialNestRule($selector) {
+    @if $nest {
+      @at-root {
+        #{$selector} {
+          #{$currentSelector} {
+            @content;
+          }
+        }
+      }
+    } @else {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @if $nest {
+      @at-root {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    } @else {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin m($modifier, $nest: false) {
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector + $selector + $t-modifier-separator + $unit + ","};
+  }
+
+  @if $nest {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  } @else {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+@mixin button-color($bg, $fg: #fff) {
+  border-color: $bg;
+  background-color: $bg;
+  color: $fg;
+  &:hover,
+  &:focus {
+    border-color: color.adjust($bg, $lightness: 10%);
+    background: color.adjust($bg, $lightness: 10%);
+    color: $fg;
+  }
+  &:active {
+    border-color: color.adjust($bg, $lightness: -10%);
+    background-color: color.adjust($bg, $lightness: -10%);
+    color: $fg;
+  }
+  &[disabled],
+  &.is-disabled {
+    border-color: $bg;
+    background-color: $bg;
+    color: $fg;
+    opacity: 0.6;
+  }
+}
+
+// plain模式
+@mixin plain($color) {
+  color: $color;
+  border-color: $color;
+  background: #fff;
+  &:hover,
+  &:focus {
+    color: color.adjust($color, $lightness: -10%);
+    border-color: color.adjust($color, $lightness: -10%);
+  }
+  &:active {
+    color: color.adjust($color, $lightness: 10%);
+    border-color: color.adjust($color, $lightness: 10%);
+  }
+}

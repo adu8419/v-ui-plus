@@ -1,0 +1,190 @@
+@use "../mixins/mixins.scss" as *;
+@use "../mixins/var.scss" as *; // 添加这行
+/**
+* 设置按钮背景色和文字颜色，按下按钮时背景色自动加深、文字自动增加透明度
+* @param $bg-背景颜色
+* @param [$bg=#fff]-文字颜色
+*/
+$successColor: #36bb42; // 成功颜色
+$failureColor: #ee424e; // 失败颜色
+$warningColor: #f1a225; // 警告颜色
+$messageColor: #999; // 提醒颜色
+
+$btnLargeHeight: 40px; // 大按钮高度  （大）  对应v-button组件的default
+$btnNormalHeight: 34px; // 正常按钮高度 （中） 对应v-button组件的small
+$btnMinHeight: 28px; // 小按钮高度 （小）     对应v-button组件的mini
+
+.el-button:focus-visible {
+  outline: none !important;
+}
+.el-button.ui-button {
+  border-radius: 4px;
+  vertical-align: middle;
+  transition: all 0.2s;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: $btnNormalHeight;
+  &.is-disabled {
+    color: #6a748a;
+  }
+  &:not(.is-disabled):hover,
+  &:not(.is-disabled):focus {
+    color: $themeColor;
+    border-color: $themeColor;
+    background: #fff;
+    .icon {
+      color: $themeColor;
+    }
+  }
+  &:not(.is-disabled):active {
+    color: #f2f3f4;
+  }
+  &:focus-visible {
+    outline: none !important;
+  }
+  .btn-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    vertical-align: -0.18rem;
+  }
+
+  // 按钮大小的样式
+  &.el-button--large {
+    height: $btnLargeHeight;
+    padding: 0 26px;
+  }
+  &.el-button--small {
+    height: $btnMinHeight;
+    padding: 0 12px;
+  }
+
+  // 主题按钮样式
+  &.el-button--primary {
+    background: $themeColor;
+    border-color: $themeColor;
+    &:not(.is-disabled):hover,
+    &:not(.is-disabled):focus {
+      background: $themeActiveColor;
+      border-color: $themeActiveColor;
+      color: #fff;
+      .icon {
+        color: #fff;
+      }
+    }
+    &:not(.is-disabled):active {
+      // @extend .background-color-dark;
+      // @extend .border-color-background-dark;
+      color: #fff;
+    }
+    &[disabled],
+    &.is-disabled {
+      // background: $themeColor;
+      background-color: #f2f3f4 !important;
+      border-color: #d4d8df !important;
+      color: #9fa4af;
+      // border-color: $themeColor;
+      // opacity: 0.6;
+    }
+    // 重写element的这种情况的color属性
+    &.is-plain.is-disabled:hover {
+      color: #9fa4af;
+    }
+    &.is-plain:not(.is-disabled) {
+      background: #fff !important;
+      background-color: #fff !important;
+      color: $themeColor;
+      &:hover,
+      &:focus,
+      &:active {
+        background: #fff !important;
+        background-color: #fff !important;
+        color: $themeColor;
+        .icon {
+          color: $themeColor;
+        }
+      }
+    }
+    .loading-wrapper {
+      span {
+        color: #fff;
+      }
+      .icon {
+        margin-right: 6px;
+      }
+    }
+  }
+
+  // 成功按钮样式
+  &.el-button--success {
+    @include button-color($successColor);
+    // 朴素按钮
+    &.is-plain {
+      @include plain($successColor);
+    }
+  }
+
+  // 危险按钮样式
+  &.el-button--danger {
+    @include button-color($failureColor);
+    // 朴素按钮
+    &.is-plain {
+      @include plain($failureColor);
+    }
+  }
+
+  // 警告按钮样式
+  &.el-button--warning {
+    @include button-color($warningColor);
+    // 朴素按钮
+    &.is-plain {
+      @include plain($warningColor);
+    }
+  }
+
+  // 信息按钮样式
+  &.el-button--info {
+    @include button-color($messageColor);
+    // 朴素按钮
+
+    &.is-plain {
+      @include plain($messageColor);
+    }
+    &.is-plain.is-disabled:hover {
+      color: #9fa4af;
+      background: inherit;
+    }
+  }
+
+  // 文本链接按钮
+  &.is-text {
+    color: $themeColor;
+    border: 0 none;
+    padding: 0 4px; // 链接按钮不加padding
+    &.is-disabled {
+      color: #9fa4af;
+    }
+    &:not(.is-disabled):hover,
+    &:not(.is-disabled):focus {
+      color: $themeColor;
+    }
+    &:not(.is-disabled):active {
+      // @extend .font-color-background-dark;
+    }
+  }
+  // 文本按钮
+  &.is-text.el-button--txt {
+    color: #363a50;
+    border: 0 none;
+    &.is-disabled {
+      color: #9fa4af;
+    }
+    &:not(.is-disabled):hover,
+    &:not(.is-disabled):focus {
+      background-color: #f2f3f4;
+      color: #363a50;
+    }
+    &:not(.is-disabled):active {
+      background-color: #d4d8df;
+    }
+  }
+}

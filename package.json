@@ -1,0 +1,148 @@
+{
+  "name": "@bdp/v-ui-plus",
+  "version": "1.0.0",
+  "description": "Vue3 中基于Element-plus二次封装基础组件文档",
+  "author": "bdp",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*",
+      "docs"
+    ]
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm stub:build && pnpm build:utils && pnpm build:eslint-config",
+    "stub:build": "pnpm run -C scripts/build stub",
+    "build": "pnpm run clean && pnpm run build:theme && pnpm run build:main",
+    "build:resolver": "rimraf packages/resolver/dist && pnpm run -C packages/resolver build",
+    "build:utils": "pnpm run -C packages/utils build",
+    "build:main": "pnpm run -C scripts/build build",
+    "build:theme": "pnpm run -C packages/theme-chalk build",
+    "build:eslint-config": "pnpm run -C packages/eslint-config build",
+    "dev-bdp": "pnpm run -C apps/bdp_manage dev",
+    "clean": "rimraf dist && rimraf packages/theme-chalk/dist",
+    "pub": "npm publish --registry=https://registry.npmjs.org/",
+    "deploy": "./deploy.sh",
+    "resolver": "resolver.sh",
+    "publish": "publish.sh",
+    "lib-pub": "lib.sh",
+    "prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "docs:prettier": "prettier --write \"docs/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "docs:dev": "pnpm run -C docs dev",
+    "docs:build": "pnpm run -C docs build",
+    "lint:lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@v-ui-plus/components": "workspace:*",
+    "@v-ui-plus/eslint-config": "workspace:*",
+    "@v-ui-plus/resolver": "workspace:*",
+    "@v-ui-plus/theme-chalk": "workspace:*",
+    "@v-ui-plus/hooks": "workspace:*",
+    "@v-ui-plus/locale": "workspace:*",
+    "@v-ui-plus/types": "workspace:*",
+    "@v-ui-plus/utils": "workspace:*",
+    "dayjs": "^1.11.7",
+    "element-plus": "^2.7.8",
+    "esbuild": "0.24.0",
+    "lodash-es": "^4.17.21",
+    "sortablejs": "^1.15.0",
+    "vite": "^5.2.9",
+    "vue": "^3.4.21",
+    "vue-tsc": "1.8.27"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@inquirer/prompts": "^1.2.3",
+    "@pnpm/find-workspace-packages": "^6.0.8",
+    "@pnpm/types": "^9.0.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/fs-extra": "^11.0.1",
+    "@types/jsdom": "^21.1.1",
+    "@types/lodash-es": "^4.17.7",
+    "@types/node": "^20.1.4",
+    "@types/sortablejs": "^1.15.1",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "@vitest/coverage-v8": "^1.5.0",
+    "@vue/test-utils": "^2.4.5",
+    "autoprefixer": "^10.4.14",
+    "chalk": "4.1.2",
+    "commitizen": "^4.3.0",
+    "compare-func": "^2.0.0",
+    "consola": "^3.1.0",
+    "conventional-changelog-cli": "^3.0.0",
+    "conventional-changelog-custom-config": "^0.3.1",
+    "cssnano": "^6.0.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.0.0",
+    "cz-git": "^1.6.1",
+    "enquirer": "^2.3.6",
+    "execa": "5.1.0",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^11.1.1",
+    "jsdom": "^22.1.0",
+    "lint-staged": "^13.2.2",
+    "minimist": "^1.2.8",
+    "ora": "^6.3.1",
+    "postcss": "^8.4.24",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "rollup": "^4.14.3",
+    "rollup-plugin-banner2": "^1.2.3",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-scss": "^4.0.0",
+    "sass": "1.32.13",
+    "sass-loader": "13.1.0",
+    "semver": "^7.5.1",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
+    "vite-plugin-dts": "^3.8.3",
+    "vitest": "^1.5.0"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.7.8",
+    "vue": "^3.2.0"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git",
+      "useEmoji": true
+    }
+  },
+  "lint-staged": {
+    "*.{vue,js,ts,jsx,tsx}": [
+      "pnpm run lint"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adu8419/v-ui-plus"
+  },
+  "homepage": "https://github.com/adu8419/v-ui-plus",
+  "keywords": [
+    "element-ui",
+    "element-plus",
+    "vite",
+    "vite3",
+    "vitepress",
+    "vue",
+    "vue3",
+    "t-ui",
+    "v-ui-plus",
+    "bdp",
+    "二次封装组件",
+    "封装组件",
+    "components"
+  ]
+}
